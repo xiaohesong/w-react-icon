@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Code = props => {
+const TagStroke = props => {
   const { color, size, ...otherProps } = props;
   return (
     <svg
@@ -9,31 +9,31 @@ const Code = props => {
       width={size}
       height={size}
       viewBox="0 0 24 24"
-      fill={color}
+      fill="none"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       {...otherProps}
     >
       <path
         fillRule="evenodd"
         clipRule="evenodd"
-        d="M15.293 5.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L20.586 12l-5.293-5.293a1 1 0 010-1.414z"
-      ></path>
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M8.707 5.293a1 1 0 010 1.414L3.414 12l5.293 5.293a1 1 0 11-1.414 1.414l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 0z"
+        d="M4.879 2.879A3 3 0 017 2h10a3 3 0 013 3v16a1 1 0 01-1.581.814L12 17.229l-6.419 4.585A1 1 0 014 21V5a3 3 0 01.879-2.121z"
+        fill="#000"
       ></path>
     </svg>
   );
 };
 
-Code.propTypes = {
+TagStroke.propTypes = {
   color: PropTypes.string,
   size: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 };
 
-Code.defaultProps = {
+TagStroke.defaultProps = {
   color: 'currentColor',
   size: '24'
 };
 
-export default Code;
+export default TagStroke;
