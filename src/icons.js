@@ -54,4 +54,3 @@ export { default as Frame33089 } from './icons/Frame33089';
 export { default as EditStroke } from './icons/edit-stroke';
 export { default as EditFill } from './icons/edit-fill';
 export { default as Edit } from './icons/edit';
-export { default as TagStroke } from './icons/tag_-stroke';

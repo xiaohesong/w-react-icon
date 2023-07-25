@@ -2,17 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Image1 = props => {
-  const { color, size, ...otherProps } = props;
+  const { color, size = 24, ...otherProps } = props;
   return (
     <svg
+      fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      width={size}
-      height={size}
+      xlink="http://www.w3.org/1999/xlink"
       viewBox="0 0 24 24"
-      fill={color}
-      {...otherProps}
+      style={{ width: '1em', height: '1em', fontSize: size }}
     >
-      <rect width="102" height="107" fill="url(#pattern0)"></rect>
+      <rect width="24" height="24" fill="url(#pattern0)"></rect>
       <defs>
         <pattern
           id="pattern0"
@@ -20,7 +19,10 @@ const Image1 = props => {
           width="1"
           height="1"
         >
-          <use href="#image0_22_450" transform="scale(.00488 .00465)"></use>
+          <use
+            href="#image0_22_450"
+            transform="matrix(.00488 0 0 .00488 0 -.024)"
+          ></use>
         </pattern>
         <image
           id="image0_22_450"

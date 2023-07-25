@@ -20,6 +20,10 @@ function optimize(svg) {
     plugins: [
       { convertShapeToPath: false },
       { mergePaths: false },
+      { removeViewbox: false },
+      { removeDimensions: true },
+      // { addClassesToSVGElement: { className: 'w-react-icon' } },
+      // { addAttributesToSVGElement: { attributes: [{className: "w-react-icon"}, {style: {width: '1em', height: '1em'}}] } },
       // { removeAttrs: { attrs: '(fill|stroke.*)' } },
       { removeTitle: true },
     ],
@@ -49,9 +53,11 @@ async function processSvg(svg) {
   const optimized = await optimize(svg)
     // remove semicolon inserted by prettier
     // because prettier thinks it's formatting JSX not HTML
-    .then(svg => svg.replace(/;/g, ''))
-    .then(removeSVGElement)
-    .then(svg => svg.replace(/([a-z]+)-([a-z]+)=/g, (_, a, b) => `${a}${CamelCase(b)}=`))
+    .then(svg => {
+      return svg.replace(/;/g, '')
+    })
+    // .then(removeSVGElement)
+    // .then(svg => svg.replace(/([a-z]+)-([a-z]+)=/g, (_, a, b) => `${a}${CamelCase(b)}=`))
   return optimized;
 }
 

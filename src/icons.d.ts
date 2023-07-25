@@ -63,4 +63,3 @@ export const Frame33089: Icon;
 export const EditStroke: Icon;
 export const EditFill: Icon;
 export const Edit: Icon;
-export const TagStroke: Icon;
