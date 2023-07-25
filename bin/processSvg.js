@@ -15,6 +15,7 @@ function CamelCase(str) {
  * @param {string} svg - An SVG string.
  * @returns {Promise<string>}
  */
+
 function optimize(svg) {
   const svgo = new Svgo({
     plugins: [
