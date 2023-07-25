@@ -22,8 +22,6 @@ function optimize(svg) {
       { mergePaths: false },
       { removeViewbox: false },
       { removeDimensions: true },
-      // { addClassesToSVGElement: { className: 'w-react-icon' } },
-      // { addAttributesToSVGElement: { attributes: [{className: "w-react-icon"}, {style: {width: '1em', height: '1em'}}] } },
       // { removeAttrs: { attrs: '(fill|stroke.*)' } },
       { removeTitle: true },
     ],
