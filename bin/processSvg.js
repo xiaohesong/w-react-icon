@@ -10,22 +10,37 @@ function CamelCase(str) {
   return str.replace(/(^|-)([a-z])/g, (_, __, c) => c.toUpperCase())
 }
 
+function findKeyByValue(object, value) {
+  return Object.keys(object).find((key) => object[key] === value);
+}
+
+
 /**
  * Optimize SVG with `svgo`.
  * @param {string} svg - An SVG string.
  * @returns {Promise<string>}
  */
 
-function optimize(svg) {
+function optimize(svg, cfMap) {
+  console.log('woqu', cfMap)
+  let replaceValue = ''
+  if(Object.keys(cfMap).length) {
+    replaceValue = findKeyByValue(cfMap, 'currentColor')
+  }
+  console.log('replaceValue is', replaceValue)
+
+  const plugins = [
+    { convertShapeToPath: false },
+    { mergePaths: false },
+    { removeViewbox: false },
+    { removeDimensions: true },
+    // 改变色值
+    replaceValue && { convertColors: {currentColor: new RegExp(replaceValue)} },
+    // { removeAttrs: { attrs: '(fill|stroke.*)' } },
+    { removeTitle: true },
+  ].filter(Boolean);
   const svgo = new Svgo({
-    plugins: [
-      { convertShapeToPath: false },
-      { mergePaths: false },
-      { removeViewbox: false },
-      { removeDimensions: true },
-      // { removeAttrs: { attrs: '(fill|stroke.*)' } },
-      { removeTitle: true },
-    ],
+    plugins
   });
 
   return new Promise(resolve => {
@@ -48,8 +63,8 @@ function removeSVGElement(svg) {
  * @param {string} svg - An SVG string.
  * @param {Promise<string>}
  */
-async function processSvg(svg) {
-  const optimized = await optimize(svg)
+async function processSvg(svg, {cfMap}) {
+  const optimized = await optimize(svg, cfMap)
     // remove semicolon inserted by prettier
     // because prettier thinks it's formatting JSX not HTML
     .then(svg => {

@@ -4,7 +4,7 @@ const path = require('path')
 const fs = require('fs')
 const format = require('prettier-eslint')
 const processSvg = require('./processSvg')
-const { parseName } = require('./utils')
+const { parseName, getCfContent, generateCfMap } = require('./utils')
 const defaultStyle = process.env.npm_package_config_style || 'stroke'
 const { getAttrs, getElementCode } = require('./template')
 const icons = require('../src/data.json')
@@ -58,16 +58,25 @@ const attrsToString = (attrs, style) => {
   }).join(' ');
 };
 
+// 获取颜色跟随相关
+const getCfInfo = (description) => {
+  if(!description) return ''
+  const content = getCfContent(description)
+  return content 
+}
+
 // generate icon code separately
-const generateIconCode = async ({name}) => {
+const generateIconCode = async ({name, description}) => {
+  const descriptionInfo = getCfInfo(description)
+  const cfMap = generateCfMap(descriptionInfo)
   const names = parseName(name, defaultStyle)
   console.log(names)
   const location = path.join(rootDir, 'src/svg', `${names.name}.svg`)
   const destination = path.join(rootDir, 'src/icons', `${names.name}.js`)
   const code = fs.readFileSync(location)
-  const svgCode = await processSvg(code)
+  const svgCode = await processSvg(code, {cfMap})
   const ComponentName = names.componentName
-  const element = getElementCode(ComponentName, attrsToString(getAttrs(names.style), names.style), svgCode)
+  const element = getElementCode(ComponentName, attrsToString(getAttrs(names.style), names.style), svgCode, {cfMap})
   const component = format({
     text: element,
     eslintConfig: {
@@ -108,8 +117,8 @@ generateIconsIndex()
 Object
   .keys(icons)
   .map(key => icons[key])
-  .forEach(({name}) => {
-    generateIconCode({name})
+  .forEach(({name, description}) => {
+    generateIconCode({name, description})
       .then(({ComponentName, name}) => {
         appendToIconsIndex({ComponentName, name})
       })
