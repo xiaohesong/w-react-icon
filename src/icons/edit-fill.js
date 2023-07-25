@@ -9,6 +9,7 @@ const EditFill = props => {
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       style={{ width: '1em', height: '1em', fontSize: size }}
+      {...otherProps}
     >
       <path
         d="M20.363 3H3.637a1 1 0 00-.991 1.128l1.779 13.79a1 1 0 00.62.8l6.584 2.633a1 1 0 00.742 0l6.584-2.633a1 1 0 00.62-.8l1.78-13.79A1 1 0 0020.363 3z"

@@ -9,6 +9,7 @@ const Frame = props => {
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       style={{ width: '1em', height: '1em', fontSize: size }}
+      {...otherProps}
     >
       <path
         d="M12.18 21.991H3.385c-.763 0-1.384-.62-1.384-1.384v-7.819h10.18v9.203z"

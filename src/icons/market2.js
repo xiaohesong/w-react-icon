@@ -9,6 +9,7 @@ const Market2 = props => {
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       style={{ width: '1em', height: '1em', fontSize: size }}
+      {...otherProps}
     >
       <path
         d="M7.123 14l-4.199 2.143c-.565.289-.565 1.234 0 1.523l7.956 4.06a2.43 2.43 0 002.24 0l7.956-4.06c.566-.289.566-1.234 0-1.523L16.877 14l-3.757 1.918a2.43 2.43 0 01-2.24 0L7.123 14z"

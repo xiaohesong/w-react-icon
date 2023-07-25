@@ -51,7 +51,7 @@ const getElementCode = (ComponentName, attrs, svgCode) => {
     const ${ComponentName} = (props) => {
       const { color, size = 24, ...otherProps } = props;
       return (
-        <svg ${svgAttributes} >
+        <svg ${svgAttributes} {...otherProps} >
           ${result.content}
         </svg>
       )

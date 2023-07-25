@@ -9,6 +9,7 @@ const BellOff = props => {
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       style={{ width: '1em', height: '1em', fontSize: size }}
+      {...otherProps}
     >
       <g clip-path="url(#clip0_0_59)" fill="#000">
         <path

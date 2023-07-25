@@ -10,6 +10,7 @@ const Image1 = props => {
       xlink="http://www.w3.org/1999/xlink"
       viewBox="0 0 24 24"
       style={{ width: '1em', height: '1em', fontSize: size }}
+      {...otherProps}
     >
       <rect width="24" height="24" fill="url(#pattern0)"></rect>
       <defs>
