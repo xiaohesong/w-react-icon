@@ -68,7 +68,7 @@ const getElementCode = (ComponentName, attrs, svgCode, {cfMap}) => {
     }
 
     ${ComponentName}.defaultProps = {
-      color: 'currentColor',
+      color: "${defaultColor ? defaultColor : 'currentColor'}",
       size: '24',
     }
 

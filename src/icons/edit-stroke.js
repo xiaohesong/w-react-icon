@@ -57,7 +57,7 @@ EditStroke.propTypes = {
 };
 
 EditStroke.defaultProps = {
-  color: 'currentColor',
+  color: '#7C70FF',
   size: '24'
 };
 
