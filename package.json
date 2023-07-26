@@ -1,6 +1,6 @@
 {
   "name": "w-react-icon",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "Icon automation workflow with Figma",
   "main": "dist/w-react-icon.cjs.js",
   "module": "dist/w-react-icon.esm.js",
