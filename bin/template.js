@@ -25,24 +25,17 @@ const cheerio = require('cheerio')
 const regenerateCode = (svgCode) => {
   const $ = cheerio.load(svgCode);
   const svg = $('svg')
-  // console.log('attrus is', svg.attr())
-  // svg.attr(`style`, "`width: 1em; height: 1em; font-size: ${size}`")
-  // console.log('$ is', $('body').children().html())
-  // return $('body').children().html();
   return {content: $('body').children().html(), attr: svg.attr()}
-  // return svg.parent().html()
 }
 
 const getElementCode = (ComponentName, attrs, svgCode, {cfMap}) => {
   const result = regenerateCode(svgCode)
-  const { attr } = result
   const defaultColor = findKeyByValue(cfMap, 'currentColor') || ''
   let attributes = {...result.attr, style: "width: '1em', height: '1em',fontSize: size"}
   if(defaultColor) {
     attributes = {...attributes, color: 'color'}
   }
 
-  console.log('attributes is', attributes)
   const svgAttributes = Object.entries(attributes).map(([k,v]) => {
       if(k === 'style') {
         return `${k}={{${v}}}`
