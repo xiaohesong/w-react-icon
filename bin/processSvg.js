@@ -1,5 +1,6 @@
 const Svgo = require('svgo');
 const cheerio = require('cheerio')
+const { findKeyByValue } = require('./utils')
 
 /**
  * Convert string to CamelCase.
@@ -8,10 +9,6 @@ const cheerio = require('cheerio')
  */
 function CamelCase(str) {
   return str.replace(/(^|-)([a-z])/g, (_, __, c) => c.toUpperCase())
-}
-
-function findKeyByValue(object, value) {
-  return Object.keys(object).find((key) => object[key] === value);
 }
 
 

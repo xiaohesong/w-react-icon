@@ -2,13 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const EditStroke = props => {
-  const { color, size = 24, ...otherProps } = props;
+  const { color = '#7C70FF', size = 24, ...otherProps } = props;
   return (
     <svg
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       style={{ width: '1em', height: '1em', fontSize: size }}
+      color={color}
       {...otherProps}
     >
       <path
