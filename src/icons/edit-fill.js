@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const EditFill = props => {
-  const { color, size = 24, ...otherProps } = props;
+  const { color = '', size = 24, ...otherProps } = props;
   return (
     <svg
       fill="none"

@@ -37,8 +37,13 @@ const generateCfMap = (descriptionContent) => {
   return result
 }
 
+function findKeyByValue(object, value) {
+  return Object.keys(object).find((key) => object[key] === value);
+}
+
 module.exports = {
   parseName,
   getCfContent,
-  generateCfMap
+  generateCfMap,
+  findKeyByValue
 };
