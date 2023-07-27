@@ -63,12 +63,20 @@ const getElementCode = (ComponentName, attrs, svgCode, {cfMap}) => {
       return `${k}="${v}"`
   }).join(' ')
 
+  let resetPropsTemplate = ''
+  if(replaceValues) {
+    const defaultValues = Object.keys(resetObj).map(k => `${k}="${resetObj[k]}"`).join(', ')
+    resetPropsTemplate = `const { ${defaultValues} } = props`
+  }
+
   return `
     import React from 'react';
     import PropTypes from 'prop-types';
 
     const ${ComponentName} = (props) => {
       const { color = '${defaultColor}', size = 24, ...otherProps } = props;
+      ${resetPropsTemplate}
+      
       return (
         <svg ${svgAttributes} {...otherProps} >
           ${replaceValues ? newContent : result.content}

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 const ArrowDownRight = props => {
   const { color = '', size = 24, ...otherProps } = props;
+
   return (
     <svg
       fill="none"
