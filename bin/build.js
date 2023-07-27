@@ -68,6 +68,7 @@ const getCfInfo = (description) => {
 // generate icon code separately
 const generateIconCode = async ({name, description}) => {
   const descriptionInfo = getCfInfo(description)
+  console.log('descriptionInfo is', descriptionInfo)
   const cfMap = generateCfMap(descriptionInfo)
   const names = parseName(name, defaultStyle)
   console.log(names)

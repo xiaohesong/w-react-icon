@@ -20,8 +20,8 @@ const getAttrs = (style) => {
   return Object.assign({}, baseAttrs, style==='fill' ? fillAttrs : strokeAttrs)
 }
 
-const {findKeyByValue} = require('./utils')
 const cheerio = require('cheerio')
+const { objectWithoutKey, findKeyByValue } = require('./utils')
 const regenerateCode = (svgCode) => {
   const $ = cheerio.load(svgCode);
   const svg = $('svg')
@@ -30,12 +30,29 @@ const regenerateCode = (svgCode) => {
 
 const getElementCode = (ComponentName, attrs, svgCode, {cfMap}) => {
   const result = regenerateCode(svgCode)
-  const defaultColor = findKeyByValue(cfMap, 'currentColor') || ''
+  const defaultColor = cfMap['currentColor'] || ''
+  const resetObj = objectWithoutKey(cfMap, 'currentColor')
+  const replaceValues = Object.values(resetObj).map(v => `"${v}"`).join('|')
+  let newContent = result.content
+  if(replaceValues.length) {
+    const replaceRegex = new RegExp(replaceValues, 'g')
+    newContent = result.content.replace(replaceRegex, (matched) => {
+      matched = matched.replace(/"/g, '')
+      const key = findKeyByValue(resetObj, matched)
+      console.log('matched is', matched, key)
+      return `{${key}}`
+    })
+  }
+
+  let resetPropTypes = {}
+  Object.keys(resetObj).map((key) => {
+    resetPropTypes = {...resetPropTypes, [key]: 'PropTypes.string'}
+  })
+
   let attributes = {...result.attr, style: "width: '1em', height: '1em',fontSize: size"}
   if(defaultColor) {
     attributes = {...attributes, color: 'color'}
   }
-
   const svgAttributes = Object.entries(attributes).map(([k,v]) => {
       if(k === 'style') {
         return `${k}={{${v}}}`
@@ -54,7 +71,7 @@ const getElementCode = (ComponentName, attrs, svgCode, {cfMap}) => {
       const { color = '${defaultColor}', size = 24, ...otherProps } = props;
       return (
         <svg ${svgAttributes} {...otherProps} >
-          ${result.content}
+          ${replaceValues ? newContent : result.content}
         </svg>
       )
     };
@@ -65,11 +82,13 @@ const getElementCode = (ComponentName, attrs, svgCode, {cfMap}) => {
         PropTypes.string,
         PropTypes.number
       ]),
+      ${Object.entries(resetPropTypes).map(([k,v]) => `${k}: ${v}`).join(',\n')}
     }
 
     ${ComponentName}.defaultProps = {
       color: "${defaultColor ? defaultColor : 'currentColor'}",
       size: '24',
+      ${Object.entries(resetObj).map(([k,v]) => `${k}: "${v}"`).join(',\n')}
     }
 
     export default ${ComponentName}

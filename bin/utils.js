@@ -25,7 +25,8 @@ const getCfContent = (description) => {
 const generateCfMap = (descriptionContent) => {
   const ar = descriptionContent.split(',')
   const result = ar.reduce((acc, item) => {
-    const regex = /(#\w+)\s*:\s*(\w+)/; // 匹配键值对，假设键是以#开头的字符串，值是单词字符
+    // const regex = /(#\w+)\s*:\s*(\w+)/; // 匹配键值对，假设键是以#开头的字符串，值是单词字符
+    const regex = /([^:\s]+)\s*:\s*(.*)/; // 匹配键值对
     const match = item.match(regex);
     if (match) {
       const key = match[1].trim();
@@ -41,9 +42,14 @@ function findKeyByValue(object, value) {
   return Object.keys(object).find((key) => object[key] === value);
 }
 
+const objectWithoutKey = (obj, k) => Object.fromEntries(
+  Object.entries(obj).filter(([key, value]) => key !== k)
+);
+
 module.exports = {
   parseName,
   getCfContent,
   generateCfMap,
-  findKeyByValue
+  findKeyByValue,
+  objectWithoutKey
 };

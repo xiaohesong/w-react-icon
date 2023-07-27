@@ -31,7 +31,7 @@ const EditStroke = props => {
         fill-rule="evenodd"
         clip-rule="evenodd"
         d="M7.745 7.345A1 1 0 018.5 7H16a1 1 0 110 2H9.653l.214 1.5H15.5a1 1 0 01.992 1.124l-.5 4a1 1 0 01-.676.825l-3 1a1 1 0 01-.632 0l-3-1A1 1 0 018 15.5v-1a1 1 0 112 0v.28l2 .666 2.086-.695.281-2.251H9a1 1 0 01-.99-.859l-.5-3.5a1 1 0 01.235-.796z"
-        fill="#fff"
+        fill={vcolor}
         fill-opacity=".8"
       ></path>
       <defs>
@@ -43,8 +43,8 @@ const EditStroke = props => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="matrix(7.15 -13.27083 14.47014 7.79616 5.4 20.288)"
         >
-          <stop stop-color="#fff"></stop>
-          <stop offset="1" stop-color="#fff" stop-opacity="0"></stop>
+          <stop stop-color={vcolor}></stop>
+          <stop offset="1" stop-color={vcolor} stop-opacity="0"></stop>
         </radialGradient>
       </defs>
     </svg>
@@ -53,12 +53,14 @@ const EditStroke = props => {
 
 EditStroke.propTypes = {
   color: PropTypes.string,
-  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  vcolor: PropTypes.string
 };
 
 EditStroke.defaultProps = {
   color: '#7C70FF',
-  size: '24'
+  size: '24',
+  vcolor: '#fff'
 };
 
 export default EditStroke;

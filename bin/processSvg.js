@@ -19,12 +19,7 @@ function CamelCase(str) {
  */
 
 function optimize(svg, cfMap) {
-  console.log('woqu', cfMap)
-  let replaceValue = ''
-  if(Object.keys(cfMap).length) {
-    replaceValue = findKeyByValue(cfMap, 'currentColor')
-  }
-  console.log('replaceValue is', replaceValue)
+  const replaceValue = cfMap['currentColor']
 
   const plugins = [
     { convertShapeToPath: false },
