@@ -62,6 +62,20 @@ const convertedStyle = (svgCode) => svgCode.replace(/style="(.*?)"/g, (match, st
   return `style={${JSON.stringify(styleObj)}}`;
 });
 
+function replaceAttributesWithJSX(svgCode, attributes) {
+  let jsxCode = svgCode;
+  attributes.forEach((attribute) => {
+    let jsxAttribute = attribute.replace(':', '-');
+    jsxAttribute = toCamelCase(jsxAttribute)
+    jsxCode = jsxCode.replace(new RegExp(attribute, 'g'), jsxAttribute);
+  });
+  return jsxCode;
+}
+
+const replaceImageData = (svgcode) => {
+  return svgcode.replace(/(data:image[^;]*)(base64)/, '$1;$2');
+}
+
 
 module.exports = {
   parseName,
@@ -69,5 +83,7 @@ module.exports = {
   generateCfMap,
   findKeyByValue,
   objectWithoutKey,
-  convertedStyle
+  convertedStyle,
+  replaceAttributesWithJSX,
+  replaceImageData
 };

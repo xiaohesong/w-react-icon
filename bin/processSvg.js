@@ -27,11 +27,13 @@ function optimize(svg, cfMap) {
     { removeDimensions: true },
     // 改变色值
     replaceValue && { convertColors: {currentColor: new RegExp(replaceValue)} },
+    // { convertStyleToAttrs: false },
     // { removeAttrs: { attrs: '(fill|stroke.*)' } },
     { removeTitle: true },
   ].filter(Boolean);
   const svgo = new Svgo({
-    plugins
+    plugins,
+    // datauri: 'base64'
   });
 
   return new Promise(resolve => {

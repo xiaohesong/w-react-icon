@@ -20,8 +20,10 @@ const getAttrs = (style) => {
   return Object.assign({}, baseAttrs, style==='fill' ? fillAttrs : strokeAttrs)
 }
 
+const jsxAttribute = ['xmlns:xlink', 'xlink:href'];
+
 const cheerio = require('cheerio')
-const { objectWithoutKey, findKeyByValue, convertedStyle } = require('./utils')
+const { objectWithoutKey, findKeyByValue, convertedStyle, replaceAttributesWithJSX, replaceImageData } = require('./utils')
 
 const regenerateCode = (svgCode) => {
   const $ = cheerio.load(svgCode);
@@ -40,7 +42,6 @@ const getElementCode = (ComponentName, attrs, svgCode, {cfMap}) => {
     newContent = result.content.replace(replaceRegex, (matched) => {
       matched = matched.replace(/"/g, '')
       const key = findKeyByValue(resetObj, matched)
-      console.log('matched is', matched, key)
       return `{${key}}`
     })
   }
@@ -75,6 +76,9 @@ const getElementCode = (ComponentName, attrs, svgCode, {cfMap}) => {
   if(content.includes("style=")) {
     content = convertedStyle(content)
   }
+
+  content = replaceAttributesWithJSX(content, jsxAttribute)
+  content = replaceImageData(content)
   
   return `
     import React from 'react';
