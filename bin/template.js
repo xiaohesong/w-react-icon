@@ -21,7 +21,8 @@ const getAttrs = (style) => {
 }
 
 const cheerio = require('cheerio')
-const { objectWithoutKey, findKeyByValue } = require('./utils')
+const { objectWithoutKey, findKeyByValue, convertedStyle } = require('./utils')
+
 const regenerateCode = (svgCode) => {
   const $ = cheerio.load(svgCode);
   const svg = $('svg')
@@ -69,6 +70,12 @@ const getElementCode = (ComponentName, attrs, svgCode, {cfMap}) => {
     resetPropsTemplate = `const { ${defaultValues} } = props`
   }
 
+  // 转换style
+  let content = replaceValues ? newContent : result.content
+  if(content.includes("style=")) {
+    content = convertedStyle(content)
+  }
+  
   return `
     import React from 'react';
     import PropTypes from 'prop-types';
@@ -76,10 +83,10 @@ const getElementCode = (ComponentName, attrs, svgCode, {cfMap}) => {
     const ${ComponentName} = (props) => {
       const { color = '${defaultColor}', size = 24, ...otherProps } = props;
       ${resetPropsTemplate}
-      
+
       return (
         <svg ${svgAttributes} {...otherProps} >
-          ${replaceValues ? newContent : result.content}
+          ${content}
         </svg>
       )
     };

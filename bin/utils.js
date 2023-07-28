@@ -46,10 +46,28 @@ const objectWithoutKey = (obj, k) => Object.fromEntries(
   Object.entries(obj).filter(([key, value]) => key !== k)
 );
 
+function toCamelCase(str) {
+  return str.replace(/-([a-z])/g, (match, letter) => letter.toUpperCase());
+}
+const convertedStyle = (svgCode) => svgCode.replace(/style="(.*?)"/g, (match, styleString) => {
+  const styleObj = styleString.split(';').reduce((styleObj, style) => {
+    const [key, value] = style.split(':');
+    const camelCaseKey = toCamelCase(key);
+    if (key && value) {
+      styleObj[camelCaseKey.trim()] = value.trim();
+    }
+    return styleObj;
+  }, {});
+
+  return `style={${JSON.stringify(styleObj)}}`;
+});
+
+
 module.exports = {
   parseName,
   getCfContent,
   generateCfMap,
   findKeyByValue,
-  objectWithoutKey
+  objectWithoutKey,
+  convertedStyle
 };

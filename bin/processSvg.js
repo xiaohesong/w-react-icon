@@ -1,6 +1,5 @@
 const Svgo = require('svgo');
 const cheerio = require('cheerio')
-const { findKeyByValue } = require('./utils')
 
 /**
  * Convert string to CamelCase.
@@ -62,6 +61,10 @@ async function processSvg(svg, {cfMap}) {
     .then(svg => {
       return svg.replace(/;/g, '')
     })
+    // .then((svg) => {
+    //   const result = transform(svg, { plugins: [jsx] })
+    //   return result
+    // })
     // .then(removeSVGElement)
     // .then(svg => svg.replace(/([a-z]+)-([a-z]+)=/g, (_, a, b) => `${a}${CamelCase(b)}=`))
   return optimized;
