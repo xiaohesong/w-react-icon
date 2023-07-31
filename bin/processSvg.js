@@ -16,7 +16,7 @@ function CamelCase(str) {
  * @param {string} svg - An SVG string.
  * @returns {Promise<string>}
  */
-
+let counter = 0;
 function optimize(svg, cfMap) {
   const replaceValue = cfMap['currentColor']
 
@@ -27,6 +27,15 @@ function optimize(svg, cfMap) {
     { removeDimensions: true },
     // 改变色值
     replaceValue && { convertColors: {currentColor: new RegExp(replaceValue)} },
+    {cleanupIDs: {
+      prefix: {
+        toString() {
+          // this.counter = this.counter || 0;
+  
+          return `id-${counter++}`;
+        }
+      },
+    }},
     // { convertStyleToAttrs: false },
     // { removeAttrs: { attrs: '(fill|stroke.*)' } },
     { removeTitle: true },
@@ -60,9 +69,9 @@ async function processSvg(svg, {cfMap}) {
   const optimized = await optimize(svg, cfMap)
     // remove semicolon inserted by prettier
     // because prettier thinks it's formatting JSX not HTML
-    .then(svg => {
-      return svg.replace(/;/g, '')
-    })
+    // .then(svg => {
+    //   return svg.replace(/;/g, '')
+    // })
     // .then((svg) => {
     //   const result = transform(svg, { plugins: [jsx] })
     //   return result

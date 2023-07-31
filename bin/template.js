@@ -78,7 +78,7 @@ const getElementCode = (ComponentName, attrs, svgCode, {cfMap}) => {
   }
 
   content = replaceAttributesWithJSX(content, jsxAttribute)
-  content = replaceImageData(content)
+  // content = replaceImageData(content)
   
   return `
     import React from 'react';
