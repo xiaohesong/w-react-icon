@@ -48,6 +48,7 @@ export { default as CloudLightning } from './icons/cloud-lightning';
 export { default as CloudOff } from './icons/cloud-off';
 export { default as NavGuide } from './icons/NavGuide';
 export { default as Image1 } from './icons/image1';
+export { default as Image2 } from './icons/image2';
 export { default as Frame } from './icons/Frame';
 export { default as Market2 } from './icons/market2';
 export { default as Frame33089 } from './icons/Frame33089';

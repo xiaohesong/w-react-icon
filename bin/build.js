@@ -67,10 +67,8 @@ const getCfInfo = (description) => {
 // generate icon code separately
 const generateIconCode = async ({name, description}) => {
   const descriptionInfo = getCfInfo(description)
-  console.log('descriptionInfo is', descriptionInfo)
   const cfMap = generateCfMap(descriptionInfo)
   const names = parseName(name, defaultStyle)
-  console.log(names)
   const location = path.join(rootDir, 'src/svg', `${names.name}.svg`)
   const destination = path.join(rootDir, 'src/icons', `${names.name}.js`)
   const code = fs.readFileSync(location)
@@ -91,7 +89,6 @@ const generateIconCode = async ({name, description}) => {
 
   fs.writeFileSync(destination, component, 'utf-8');
 
-  console.log('Successfully built', ComponentName);
   return {ComponentName, name: names.name}
 }
 

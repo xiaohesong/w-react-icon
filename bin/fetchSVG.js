@@ -27,6 +27,25 @@ const client = Figma.Client({
   personalAccessToken: FIGMA_TOKEN
 })
 
+const batchSize = 500;
+// 递归处理分批请求
+function processBatches(batches, components) {
+  if (batches.length === 0) {
+    return components;
+  }
+  const batchKeys = batches.shift();
+  return client.fileImages(fileId, {
+    format: options.format,
+    ids: batchKeys,
+    scale: options.scale
+  }).then(({ data }) => {
+    for (const id of Object.keys(data.images)) {
+      components[id].image = data.images[id];
+    }
+    return processBatches(batches, components);
+  });
+}
+
 // Fail if there's no figma file key
 let fileId = null
 if (!fileId) {
@@ -74,19 +93,29 @@ client.file(fileId)
   })
   .then(components => {
     console.log('Getting export urls')
-    return client.fileImages(
-      fileId,
-      {
-        format: options.format,
-        ids: Object.keys(components),
-        scale: options.scale
-      }
-    ).then(({data}) => {
-      for(const id of Object.keys(data.images)) {
-        components[id].image = data.images[id]
-      }
-      return components
-    })
+
+    const keys = Object.keys(components);
+    const batches = [];
+    for (let i = 0; i < keys.length; i += batchSize) {
+      const batchKeys = keys.slice(i, i + batchSize);
+      batches.push(batchKeys);
+    }
+    const result = processBatches(batches, components);
+    console.log('result length', Object.keys(result).length);
+    return result;
+    // return client.fileImages(
+    //   fileId,
+    //   {
+    //     format: options.format,
+    //     ids: Object.keys(components),
+    //     scale: options.scale
+    //   }
+    // ).then(({data}) => {
+    //   for(const id of Object.keys(data.images)) {
+    //     components[id].image = data.images[id]
+    //   }
+    //   return components
+    // })
   })
   .then(components => {
     return ensureDir(join(options.outputDir))

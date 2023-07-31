@@ -57,6 +57,7 @@ export const CloudLightning: Icon;
 export const CloudOff: Icon;
 export const NavGuide: Icon;
 export const Image1: Icon;
+export const Image2: Icon;
 export const Frame: Icon;
 export const Market2: Icon;
 export const Frame33089: Icon;
