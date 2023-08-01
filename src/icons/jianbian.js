@@ -16,7 +16,7 @@ const Jianbian = props => {
     >
       <g clip-path="url(#clip0_353_188)">
         <mask
-          id="id-0a"
+          id="id-111a"
           style={{ maskType: 'luminance' }}
           maskUnits="userSpaceOnUse"
           x="0"
@@ -26,7 +26,7 @@ const Jianbian = props => {
         >
           <path d="M24 0H0v24h24V0z" fill="#fff"></path>
         </mask>
-        <g mask="url(#id-0a)">
+        <g mask="url(#id-111a)">
           <path
             d="M16 0H8a8 8 0 00-8 8v8a8 8 0 008 8h8a8 8 0 008-8V8a8 8 0 00-8-8z"
             fill="url(#paint0_linear_353_188)"
